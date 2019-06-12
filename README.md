@@ -1,6 +1,10 @@
 # material_component
 
-A new Flutter application.
+run app
+- git clone 
+- cd ~/FlutterPrj
+- flutter packages get
+- flutter run
 
 ## Getting Started
 
