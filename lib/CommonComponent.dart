@@ -12,15 +12,15 @@ class LoadingWidget extends StatelessWidget {
       height: window.physicalSize.height,
       child: new Center(
           child: new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new CircularProgressIndicator(
-            strokeWidth: 2.0,
-          ),
-          new Container(
-              padding: EdgeInsets.only(top: 10.0), child: new Text("正在加载")),
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new CircularProgressIndicator(
+                strokeWidth: 2.0,
+              ),
+              new Container(
+                  padding: EdgeInsets.only(top: 10.0), child: new Text("正在加载")),
+            ],
+          )),
     );
   }
 }
@@ -39,7 +39,9 @@ class WebPage extends StatefulWidget {
 
 class WebPageState extends State<WebPage> {
   var contexts;
+  var isHideLoading = false;
   WebViewController webViewController;
+
   @override
   void initState() {
     super.initState();
@@ -53,28 +55,48 @@ class WebPageState extends State<WebPage> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: WebView(
-        onWebViewCreated: (control){
-          webViewController = control;
-        },
-        initialUrl: widget.url,
-        javascriptMode: JavascriptMode.unrestricted,
+      body: Stack(
+        children: <Widget>[
+          WebView(
+            onWebViewCreated: (control) {
+              webViewController = control;
+            },
+            onPageFinished: (url) {
+              isHideLoading = url == widget.url;
+              //刷新
+              setState(() {});
+            },
+            initialUrl: widget.url,
+            javascriptMode: JavascriptMode.unrestricted,
+          ),
+          Offstage(
+            offstage: isHideLoading,
+            child: Container(
+              color: Colors.white,
+              child:  Center(
+                child:  CircularProgressIndicator(
+                  strokeWidth: 3.0,
+                ),
+              ),
+              constraints: BoxConstraints(minWidth: double.infinity,minHeight: double.infinity),
+            ),
+          )
+        ],
       ),
-    ), onWillPop: (){
-      if(webViewController==null){
+    ), onWillPop: () {
+      if (webViewController == null) {
         //返回到上个界面
         Navigator.pop(contexts);
         return;
       }
       //拦截back键
-      webViewController.canGoBack().then((vale){
-          if(vale){
-            webViewController.goBack();
-          }else{
-            Navigator.pop(contexts);
-          }
+      webViewController.canGoBack().then((vale) {
+        if (vale) {
+          webViewController.goBack();
+        } else {
+          Navigator.pop(contexts);
+        }
       });
-
     });
   }
 }
