@@ -24,4 +24,11 @@ class GankApi {
         await http.get('http://gank.io/api/data/$category/$pageNumbers/$index');
     return CommonPageBean.fromJson(json.decode(respnse.body));
   }
+
+  static Future<CommonPageBean> search(String word, int index,
+      {int resultNumber = 20, String category = 'all'}) async {
+    final respnse = await http.get(
+        'http://gank.io/api/search/query/$word/category/$category/count/$resultNumber/page/$index');
+    return CommonPageBean.fromJson(json.decode(respnse.body));
+  }
 }

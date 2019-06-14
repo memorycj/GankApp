@@ -76,7 +76,7 @@ class BannerState extends State<BannerWidget> {
   }
 
   Widget _buildItem(ItemData bannerUrl) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         if (widget.onTap != null) widget.onTap(bannerUrl);
       },

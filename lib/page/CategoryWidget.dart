@@ -105,7 +105,7 @@ class CategoryWidgetState extends State<CategoryWidget> with AutomaticKeepAliveC
   Widget _item(int index) {
     final data = _categoryData[index];
 
-    return GestureDetector(
+    return InkWell(
       onTap: () => {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return new WebPage(

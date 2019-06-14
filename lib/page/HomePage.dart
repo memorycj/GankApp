@@ -6,6 +6,7 @@ import 'package:material_component/bean/ItemData.dart';
 import '../CommonComponent.dart';
 import 'BannerWidget.dart';
 import 'GankApi.dart';
+import 'SearchWidget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -29,6 +30,19 @@ class HomeState extends State<HomePage> {
         appBar: AppBar(
           title: Text("Newest"),
           centerTitle: true,
+          actions: <Widget>[
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                  return SearchWidget();
+                }));
+              },
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Icon(Icons.search),
+              ),
+            )
+          ],
         ),
         body: _data.length <= 0
             ? LoadingWidget()
@@ -60,7 +74,7 @@ class HomeState extends State<HomePage> {
         fuliUrls.add(data);
         continue;
       }
-      widget.add(GestureDetector(
+      widget.add(InkWell(
         onTap: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
@@ -105,11 +119,18 @@ class HomeState extends State<HomePage> {
         ),
       ));
     }
-    if (fuliUrls.isNotEmpty) widget.insert(0, BannerWidget(fuliUrls,onTap: (value){
-          Navigator.push(context,MaterialPageRoute(builder: (ctx){
+    if (fuliUrls.isNotEmpty)
+      widget.insert(
+        0,
+        BannerWidget(
+          fuliUrls,
+          onTap: (value) {
+            Navigator.push(context, MaterialPageRoute(builder: (ctx) {
               return ImagePreviewWidget(value);
-          }));
-    },),);
+            }));
+          },
+        ),
+      );
     return widget;
   }
 }
