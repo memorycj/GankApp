@@ -105,7 +105,11 @@ class HomeState extends State<HomePage> {
         ),
       ));
     }
-    if (fuliUrls.isNotEmpty) widget.insert(0, BannerWidget(fuliUrls));
+    if (fuliUrls.isNotEmpty) widget.insert(0, BannerWidget(fuliUrls,onTap: (value){
+          Navigator.push(context,MaterialPageRoute(builder: (ctx){
+              return ImagePreviewWidget(value);
+          }));
+    },),);
     return widget;
   }
 }

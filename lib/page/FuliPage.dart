@@ -140,31 +140,7 @@ class _PhotoWidget extends StatelessWidget {
   _showPhoto(BuildContext context) {
     Navigator.push(context,
         MaterialPageRoute<void>(builder: (BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(photoInfo.desc),
-          centerTitle: true,
-        ),
-        body: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Center(
-            child: Hero(
-                tag: photoInfo.url,
-                child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: photoInfo.url,
-                  placeholder: (context, url) {
-                    return Image(
-                      image: AssetImage("images/fuli.png"),
-                      fit: BoxFit.cover,
-                    );
-                  },
-                )),
-          ),
-        ),
-      );
+      return ImagePreviewWidget(photoInfo);
     }));
   }
 }

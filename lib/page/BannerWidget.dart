@@ -76,14 +76,19 @@ class BannerState extends State<BannerWidget> {
   }
 
   Widget _buildItem(ItemData bannerUrl) {
-    return Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        CachedNetworkImage(
-          imageUrl: bannerUrl.url,
-          fit: BoxFit.cover,
-        ),
-      ],
+    return GestureDetector(
+      onTap: () {
+        if (widget.onTap != null) widget.onTap(bannerUrl);
+      },
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          CachedNetworkImage(
+            imageUrl: bannerUrl.url,
+            fit: BoxFit.cover,
+          ),
+        ],
+      ),
     );
   }
 
