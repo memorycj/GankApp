@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:photo_view/photo_view.dart';
 import 'bean/ItemData.dart';
 
 class LoadingWidget extends StatelessWidget {
@@ -15,15 +15,15 @@ class LoadingWidget extends StatelessWidget {
       height: window.physicalSize.height,
       child: new Center(
           child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new CircularProgressIndicator(
-                strokeWidth: 2.0,
-              ),
-              new Container(
-                  padding: EdgeInsets.only(top: 10.0), child: new Text("正在加载")),
-            ],
-          )),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new CircularProgressIndicator(
+            strokeWidth: 2.0,
+          ),
+          new Container(
+              padding: EdgeInsets.only(top: 10.0), child: new Text("正在加载")),
+        ],
+      )),
     );
   }
 }
@@ -31,7 +31,7 @@ class LoadingWidget extends StatelessWidget {
 class ImagePreviewWidget extends StatelessWidget {
   final ItemData photoInfo;
 
-  ImagePreviewWidget(this.photoInfo, {Key key}) :super(key: key);
+  ImagePreviewWidget(this.photoInfo, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +47,7 @@ class ImagePreviewWidget extends StatelessWidget {
         child: Center(
           child: Hero(
               tag: photoInfo.url,
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: photoInfo.url,
-                placeholder: (context, url) {
-                  return Image(
-                    image: AssetImage("images/fuli.png"),
-                    fit: BoxFit.cover,
-                  );
-                },
-              )),
+              child: PhotoView(imageProvider: NetworkImage(photoInfo.url))),
         ),
       ),
     );
