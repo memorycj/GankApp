@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:material_component/bean/ItemData.dart';
 import '../CommonComponent.dart';
 import 'BannerWidget.dart';
-import 'GankApi.dart';
+import 'package:material_component/api/GankApi.dart';
 import 'SearchWidget.dart';
 
 class HomePage extends StatefulWidget {
